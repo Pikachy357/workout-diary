@@ -10,9 +10,9 @@ public class ExerciseSet {
         this.difficulty = difficulty;
         this.comment = comment;
     }
-
-    public void showExerciseSet(){
-        System.out.println("Вес - " + weight + ", Повторения - " + reps + ", Сложность - " + difficulty + ", Коментарий - " + comment);
+    @Override
+    public String toString(){
+        return "Вес - " + weight + ", Повторения - " + reps + ", Сложность - " + difficulty + ", Коментарий - " + comment;
     }
 
     public static void main(String[] args){
@@ -21,8 +21,8 @@ public class ExerciseSet {
         sets[0] = new ExerciseSet(80, 10,  5, "norm");
         sets[1] = new ExerciseSet(80, 9,  7, "hard");
         Exercise exercise = new Exercise("Приседания", "Приседания со штангой", sets);
-        exercise.showExercise();
-        System.out.println("Подходы распечатаны");
+
+        System.out.println(exercise + "\nПодходы распечатаны");
     }
 }
 
