@@ -22,5 +22,6 @@ public class Main {
             total += set.getReps() * set.getWeight();
         }
         System.out.println(total);
+
     }
 }

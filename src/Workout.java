@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 
 public class Workout {
+
     private LocalDate workoutDate;
     private String name;
     private Exercise [] exercises;
@@ -17,8 +18,17 @@ public class Workout {
         return exercises;
     }
 
-    public Workout(LocalDate data, String name, Exercise [] exercise){
-        this.workoutDate = data;
+    public Workout(LocalDate workoutDate, String name, Exercise [] exercise){
+        if (workoutDate == null){
+            throw new IllegalArgumentException(" дата не может быть null" );
+        }
+        if (name == null || name.isBlank()){
+            throw new IllegalArgumentException("имя null или пустое");
+        }
+        if (exercise == null) {
+            throw new IllegalArgumentException(" Упражнения не может быть null");
+        }
+        this.workoutDate = workoutDate;
         this.name = name;
         this.exercises = exercise;
     }

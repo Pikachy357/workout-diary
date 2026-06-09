@@ -4,6 +4,15 @@ public class Exercise {
     private ExerciseSet [] sets;
 
     public Exercise(String name, String description, ExerciseSet[] sets){
+        if (name == null || name.isBlank()){
+            throw new IllegalArgumentException("имя null или пустое");
+        }
+        if (description == null || description.isBlank()){
+            throw new IllegalArgumentException(" описание не может быть null");
+        }
+        if (sets == null) {
+            throw new IllegalArgumentException(" походы не могут быть null");
+        }
         this.name = name;
         this.description = description;
         this.sets = sets;

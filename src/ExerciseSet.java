@@ -5,6 +5,18 @@ public class ExerciseSet {
     private String comment;
 
     public ExerciseSet(double weight, int reps, int difficulty, String comment) {
+        if (weight < 0){
+            throw new IllegalArgumentException("Отрицательный Вес" + weight);
+        }
+
+        if (reps <= 0){
+            throw new IllegalArgumentException("повторений нет или они отрицательные " + reps);
+        }
+
+        if (difficulty < 1 || difficulty > 10){
+            throw new IllegalArgumentException("Сложность вне диапазона от 1 до 10 " + difficulty);
+        }
+
         this.weight = weight;
         this.reps = reps;
         this.difficulty = difficulty;
