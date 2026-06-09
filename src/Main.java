@@ -13,6 +13,14 @@ public class Main {
         sets2[1] = new ExerciseSet(110, 4,  9, "hard");
         exercises[1] = new Exercise("Жим", "Жим лёжа со штангой", sets2);
         Workout workout = new Workout(LocalDate.of(2026, 6, 1), "Жим и присед", exercises);
-        System.out.println(  workout + "\n Распечатана тренировка");
+        System.out.println("Упраженений в тренировке: " + workout.getExercises().length);
+        System.out.println("Первое упражнение " + workout.getExercises()[0].getName());
+        System.out.print("сумарный вес за первое упражнение: ");
+        ExerciseSet [] firstExerciseSets = workout.getExercises()[0].getSets();
+        double total = 0;
+        for (ExerciseSet set:firstExerciseSets){
+            total += set.getReps() * set.getWeight();
+        }
+        System.out.println(total);
     }
 }

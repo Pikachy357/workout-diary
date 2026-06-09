@@ -8,6 +8,16 @@ public class Exercise {
         this.description = description;
         this.sets = sets;
     }
+    public String getName(){
+        return name;
+    }
+    public String getDescription(){
+        return description;
+    }
+
+    public ExerciseSet [] getSets(){
+        return sets;
+    }
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();

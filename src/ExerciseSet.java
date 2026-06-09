@@ -10,6 +10,23 @@ public class ExerciseSet {
         this.difficulty = difficulty;
         this.comment = comment;
     }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public int getReps() {
+        return reps;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
     @Override
     public String toString(){
         return "Вес - " + weight + ", Повторения - " + reps + ", Сложность - " + difficulty + ", Коментарий - " + comment;

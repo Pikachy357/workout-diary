@@ -5,6 +5,18 @@ public class Workout {
     private String name;
     private Exercise [] exercises;
 
+    public LocalDate getWorkoutDate() {
+        return workoutDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Exercise[] getExercises() {
+        return exercises;
+    }
+
     public Workout(LocalDate data, String name, Exercise [] exercise){
         this.workoutDate = data;
         this.name = name;
