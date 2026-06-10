@@ -17,6 +17,7 @@ public class Main {
         System.out.println("Первое упражнение " + workout.getExercises()[0].getName());
         System.out.print("сумарный вес за первое упражнение: ");
         ExerciseSet [] firstExerciseSets = workout.getExercises()[0].getSets();
+        ExerciseSet firts = new ExerciseSet(-50, 10, 5, "ой");
         double total = 0;
         for (ExerciseSet set:firstExerciseSets){
             total += set.getReps() * set.getWeight();
