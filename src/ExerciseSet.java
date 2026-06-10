@@ -6,7 +6,7 @@ public class ExerciseSet {
 
     public ExerciseSet(double weight, int reps, int difficulty, String comment) {
         if (weight < 0){
-            throw new IllegalArgumentException("Отрицательный Вес" + weight);
+            throw new IllegalArgumentException("Отрицательный Вес " + weight);
         }
 
         if (reps <= 0){

@@ -13,16 +13,34 @@ public class Main {
         sets2[1] = new ExerciseSet(110, 4,  9, "hard");
         exercises[1] = new Exercise("Жим", "Жим лёжа со штангой", sets2);
         Workout workout = new Workout(LocalDate.of(2026, 6, 1), "Жим и присед", exercises);
+
+        try {
+            ExerciseSet firts = new ExerciseSet(-50, 10, 5, "ой");
+            System.out.println("Подход Создан: " + firts);
+        } catch (IllegalArgumentException e){
+            System.out.println("не создался подход из-за ошибки: " + e.getMessage());
+        }
         System.out.println("Упраженений в тренировке: " + workout.getExercises().length);
         System.out.println("Первое упражнение " + workout.getExercises()[0].getName());
         System.out.print("сумарный вес за первое упражнение: ");
         ExerciseSet [] firstExerciseSets = workout.getExercises()[0].getSets();
-        ExerciseSet firts = new ExerciseSet(-50, 10, 5, "ой");
         double total = 0;
         for (ExerciseSet set:firstExerciseSets){
             total += set.getReps() * set.getWeight();
         }
         System.out.println(total);
 
+        double [] rawWeights = {80, 100, -50, 90};
+        ExerciseSet [] setfirts = new ExerciseSet[rawWeights.length];
+        int i = 0;
+        for (double weight: rawWeights){
+            try {
+                setfirts[i++]= new ExerciseSet(weight, 10, 5, "set");
+                System.out.println("Подход с весом " + weight + " создан");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Вес " + weight + " пропущен: " + e.getMessage());
+            }
+        }
     }
 }
+
