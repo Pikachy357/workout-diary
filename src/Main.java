@@ -1,18 +1,26 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args){
 
-        ExerciseSet [] sets = new ExerciseSet[2];
-        sets[0] = new ExerciseSet(80, 10,  5, "norm");
-        sets[1] = new ExerciseSet(80, 9,  7, "hard");
-        Exercise[] exercises = new Exercise[2];
-        exercises[0] = new Exercise("Приседания", "Приседания со штангой", sets);
-        ExerciseSet [] sets2 = new ExerciseSet[2];
-        sets2[0] = new ExerciseSet(100, 6,  7, "norm");
-        sets2[1] = new ExerciseSet(110, 4,  9, "hard");
-        exercises[1] = new Exercise("Жим", "Жим лёжа со штангой", sets2);
-        Workout workout = new Workout(LocalDate.of(2026, 6, 1), "Жим и присед", exercises);
+        List<ExerciseSet> sets = new ArrayList<>();
+        sets.add(new ExerciseSet(80, 10,  5, "norm"));
+        sets.add(new ExerciseSet(80, 9,  7, "hard"));
+        Exercise squat = new Exercise("Приседания", "Приседания со штангой", sets);
+
+        List<ExerciseSet> sets2 = new ArrayList<>();
+        sets2.add(new ExerciseSet(100, 6,  7, "norm"));
+        sets2.add(new ExerciseSet(110, 4,  9, "hard"));
+        Exercise press = new Exercise("Жим", "Жим лёжа со штангой", sets2);
+
+        List<Exercise> exercises = new ArrayList<>();
+        exercises.add(squat);
+        exercises.add(press);
+
+        List <Workout> workouts = new ArrayList<>();
+        workout.add(new Workout(LocalDate.of(2026, 6, 1), "Жим и присед", exercises));
 
         try {
             ExerciseSet firts = new ExerciseSet(-50, 10, 5, "ой");
@@ -20,10 +28,10 @@ public class Main {
         } catch (IllegalArgumentException e){
             System.out.println("не создался подход из-за ошибки: " + e.getMessage());
         }
-        System.out.println("Упраженений в тренировке: " + workout.getExercises().length);
-        System.out.println("Первое упражнение " + workout.getExercises()[0].getName());
+        System.out.println("Упраженений в тренировке: " + workouts.get(0).getExercises().size());
+        System.out.println("Первое упражнение " + workouts.get(0).getExercises().get(0).getName());
         System.out.print("сумарный вес за первое упражнение: ");
-        ExerciseSet [] firstExerciseSets = workout.getExercises()[0].getSets();
+        ExerciseSet [] firstExerciseSets = workouts.get(0).getExercises().get(0).getSets();
         double total = 0;
         for (ExerciseSet set:firstExerciseSets){
             total += set.getReps() * set.getWeight();

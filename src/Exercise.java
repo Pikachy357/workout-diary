@@ -1,17 +1,20 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Exercise {
     private String name;
     private String description;
-    private ExerciseSet [] sets;
+    private List<ExerciseSet> sets;
 
-    public Exercise(String name, String description, ExerciseSet[] sets){
+    public Exercise(String name, String description, List<ExerciseSet> sets){
         if (name == null || name.isBlank()){
-            throw new IllegalArgumentException("имя null или пустое");
+            throw new IllegalArgumentException("Имя null или пустое");
         }
         if (description == null || description.isBlank()){
-            throw new IllegalArgumentException(" описание не может быть null");
+            throw new IllegalArgumentException("Описание не может быть null");
         }
         if (sets == null) {
-            throw new IllegalArgumentException(" походы не могут быть null");
+            throw new IllegalArgumentException("Список походов не может быть null");
         }
         this.name = name;
         this.description = description;
@@ -24,8 +27,15 @@ public class Exercise {
         return description;
     }
 
-    public ExerciseSet [] getSets(){
+    public List <ExerciseSet> getSets(){
         return sets;
+    }
+
+    public void addSet(ExerciseSet set){
+        if (set == null){
+            throw new IllegalArgumentException("Нельзя добавть null подходов");
+        }
+        sets.add(set);
     }
     @Override
     public String toString(){
@@ -33,10 +43,12 @@ public class Exercise {
         sb.append("Упражнение: ").append(name).append("\n");
         sb.append("Описание: ").append(description).append("\n");
         sb.append("Подходы:").append("\n");
-        for (int i = 0; i < sets.length; i++){
-            sb.append(" ").append(i+1).append(") ").append(sets[i]).append("\n");
+        int number = 1;
+        for (ExerciseSet set: sets){
+            sb.append(" ").append(number).append(") ").append(set).append("\n");
+            number++;
         }
-        sb.deleteCharAt(sb.length() - 1);
+        if (!sets.isEmpty()) {sb.deleteCharAt(sb.length() - 1);}
         return sb.toString();
     }
 }
