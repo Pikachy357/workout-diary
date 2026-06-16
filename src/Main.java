@@ -20,7 +20,7 @@ public class Main {
         exercises.add(press);
 
         List <Workout> workouts = new ArrayList<>();
-        workout.add(new Workout(LocalDate.of(2026, 6, 1), "Жим и присед", exercises));
+        workouts.add(new Workout(LocalDate.of(2026, 6, 1), "Жим и присед", exercises));
 
         try {
             ExerciseSet firts = new ExerciseSet(-50, 10, 5, "ой");
@@ -31,7 +31,7 @@ public class Main {
         System.out.println("Упраженений в тренировке: " + workouts.get(0).getExercises().size());
         System.out.println("Первое упражнение " + workouts.get(0).getExercises().get(0).getName());
         System.out.print("сумарный вес за первое упражнение: ");
-        ExerciseSet [] firstExerciseSets = workouts.get(0).getExercises().get(0).getSets();
+        List<ExerciseSet> firstExerciseSets = workouts.get(0).getExercises().get(0).getSets();
         double total = 0;
         for (ExerciseSet set:firstExerciseSets){
             total += set.getReps() * set.getWeight();
@@ -39,16 +39,16 @@ public class Main {
         System.out.println(total);
 
         double [] rawWeights = {80, 100, -50, 90};
-        ExerciseSet [] setfirts = new ExerciseSet[rawWeights.length];
-        int i = 0;
+        List <ExerciseSet> setfirts = new ArrayList<>();
         for (double weight: rawWeights){
             try {
-                setfirts[i++]= new ExerciseSet(weight, 10, 5, "set");
+                setfirts.add(new ExerciseSet(weight, 10, 5, "set"));
                 System.out.println("Подход с весом " + weight + " создан");
             } catch (IllegalArgumentException e) {
                 System.out.println("Вес " + weight + " пропущен: " + e.getMessage());
             }
         }
+        System.out.println("Успешно создано подходов: " + setfirts.size());
     }
 }
 
