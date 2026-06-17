@@ -37,8 +37,8 @@ java -cp src Main
 - [x] Domain model (Workout, Exercise, ExerciseSet)
 - [x] Метод `toString()` с правильным `@Override`
 - [x] Дата как `LocalDate`, а не как строка
-- [ ] Геттеры и валидация в конструкторе
-- [ ] Переход на `ArrayList` вместо массивов
+- [x] Геттеры и валидация в конструкторе
+- [x] Переход на `ArrayList` вместо массивов
 - [ ] Сохранение в файл
 - [ ] PostgreSQL и JDBC
 - [ ] REST API на Spring Boot
