@@ -1,7 +1,6 @@
-import java.util.ArrayList;
 import java.util.List;
 
-public class Exercise {
+public class Exercise implements Describable{
     private String name;
     private String description;
     private List<ExerciseSet> sets;
@@ -50,5 +49,10 @@ public class Exercise {
         }
         if (!sets.isEmpty()) {sb.deleteCharAt(sb.length() - 1);}
         return sb.toString();
+    }
+
+    @Override
+    public String describe() {
+        return "Упражнение: " + name + " x" + sets.size() + " подходов";
     }
 }

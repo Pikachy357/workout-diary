@@ -1,4 +1,4 @@
-public class ExerciseSet {
+public class ExerciseSet implements Describable{
     private double weight;
     private int reps;
     private int difficulty;
@@ -44,6 +44,9 @@ public class ExerciseSet {
         return "Вес - " + weight + ", Повторения - " + reps + ", Сложность - " + difficulty + ", Коментарий - " + comment;
     }
 
-
+    @Override
+    public String describe() {
+        return "Подход: " + weight + "кг x" + reps;
+    }
 }
 

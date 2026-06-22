@@ -1,8 +1,7 @@
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Workout {
+public class Workout implements Describable{
 
     private LocalDate workoutDate;
     private String name;
@@ -54,5 +53,10 @@ public class Workout {
             number++;
         }
         return sb.toString();
+    }
+
+    @Override
+    public String describe() {
+        return "Тренировка: " + name + " Дата: " + workoutDate +" x" + exercises.size() + " упражнений";
     }
 }

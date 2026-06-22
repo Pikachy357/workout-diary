@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args){
+
         Map<String, Exercise> catalog = new HashMap<>();
 
         List<ExerciseSet> sets = new ArrayList<>();
@@ -71,7 +72,9 @@ public class Main {
         } else{
             System.out.println("Пользователь запросил *" + query + "* \nУпражнение *" + query + "* не найдено в справочнике");
         }
-
+        System.out.println("\n"+sets.get(0).describe());
+        System.out.println("\n"+exercises.get(0).describe());
+        System.out.println("\n"+workouts.get(0).describe());
     }
 }
 
