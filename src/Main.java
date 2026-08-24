@@ -53,7 +53,6 @@ public class Main {
             }
         }
         System.out.println("Успешно создано подходов: " + setfirts.size());
-
         System.out.println("выводим по каталогу через get (ключ Приседания) -> " + catalog.get("Приседания") );
         System.out.println("выводим по каталогу через get (ключ Жим) -> " + catalog.get("Жим") );
         System.out.println("выводим по каталогу через get (ключ Становая) -> " + catalog.get("Становая") );
