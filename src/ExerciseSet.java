@@ -1,19 +1,19 @@
-public class ExerciseSet implements Describable{
+public class ExerciseSet implements Describable {
     private double weight;
     private int reps;
     private int difficulty;
     private String comment;
 
     public ExerciseSet(double weight, int reps, int difficulty, String comment) {
-        if (weight < 0){
+        if (weight < 0) {
             throw new IllegalArgumentException("Отрицательный Вес " + weight);
         }
 
-        if (reps <= 0){
+        if (reps <= 0) {
             throw new IllegalArgumentException("повторений нет или они отрицательные " + reps);
         }
 
-        if (difficulty < 1 || difficulty > 10){
+        if (difficulty < 1 || difficulty > 10) {
             throw new IllegalArgumentException("Сложность вне диапазона от 1 до 10 " + difficulty);
         }
 
@@ -40,7 +40,7 @@ public class ExerciseSet implements Describable{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Вес - " + weight + ", Повторения - " + reps + ", Сложность - " + difficulty + ", Коментарий - " + comment;
     }
 

@@ -1,11 +1,11 @@
 import java.time.LocalDate;
 import java.util.List;
 
-public class Workout implements Describable{
+public class Workout implements Describable {
 
     private LocalDate workoutDate;
     private String name;
-    private List <Exercise> exercises;
+    private List<Exercise> exercises;
 
     public LocalDate getWorkoutDate() {
         return workoutDate;
@@ -15,15 +15,15 @@ public class Workout implements Describable{
         return name;
     }
 
-    public List <Exercise> getExercises() {
+    public List<Exercise> getExercises() {
         return exercises;
     }
 
-    public Workout(LocalDate workoutDate, String name, List<Exercise> exercise){
-        if (workoutDate == null){
-            throw new IllegalArgumentException("Дата не может быть null" );
+    public Workout(LocalDate workoutDate, String name, List<Exercise> exercise) {
+        if (workoutDate == null) {
+            throw new IllegalArgumentException("Дата не может быть null");
         }
-        if (name == null || name.isBlank()){
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Имя null или пустое");
         }
         if (exercise == null) {
@@ -34,8 +34,8 @@ public class Workout implements Describable{
         this.exercises = exercise;
     }
 
-    public void addExercise(Exercise exercise){
-        if (exercise == null){
+    public void addExercise(Exercise exercise) {
+        if (exercise == null) {
             throw new IllegalArgumentException("Нельзя добавить null упражение");
         }
         exercises.add(exercise);
@@ -48,7 +48,7 @@ public class Workout implements Describable{
         sb.append("Название: ").append(name).append("\n");
         sb.append("Упражнения:").append("\n");
         int number = 1;
-        for (Exercise exercise: exercises) {
+        for (Exercise exercise : exercises) {
             sb.append(" ").append(number).append(") ").append(exercise).append("\n\n");
             number++;
         }
@@ -57,6 +57,6 @@ public class Workout implements Describable{
 
     @Override
     public String describe() {
-        return "Тренировка: " + name + " Дата: " + workoutDate +" x" + exercises.size() + " упражнений";
+        return "Тренировка: " + name + " Дата: " + workoutDate + " x" + exercises.size() + " упражнений";
     }
 }
