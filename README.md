@@ -46,7 +46,7 @@ java -cp src Main
 - [x] Обработка исключений (try-catch)
 - [x] Переход на `ArrayList` вместо массивов
 - [x] Справочник упражнений на `Map`
-- [ ] Stream API для статистики тренировок
+- [x] Stream API для статистики тренировок
 - [ ] Сохранение в файл
 - [ ] PostgreSQL и JDBC
 - [ ] REST API на Spring Boot
