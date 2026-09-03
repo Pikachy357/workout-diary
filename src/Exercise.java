@@ -32,6 +32,18 @@ public class Exercise implements Describable {
         return sets;
     }
 
+    public double getTotalVolume() {
+        return sets.stream().mapToDouble(s -> s.getWeight()*s.getReps()).sum();
+    }
+
+    public double getMaxWeight(){
+        return sets.stream().mapToDouble(s -> s.getWeight()).max().orElse(0);
+    }
+
+    public double getAverageDifficulty() {
+        return sets.stream().mapToInt(s-> s.getDifficulty()).average().orElse(0);
+    }
+
     public void addSet(ExerciseSet set) {
         if (set == null) {
             throw new IllegalArgumentException("Нельзя добавть null подходов");
