@@ -5,6 +5,10 @@ public class ExerciseSet implements Describable {
     private String comment;
 
     public ExerciseSet(double weight, int reps, int difficulty, String comment) {
+        String [] buff = comment.split(" ");
+        if (buff.length > 1) {
+            throw new IllegalArgumentException("Вы ввели больше одного слова");
+        }
         if (weight < 0) {
             throw new IllegalArgumentException("Отрицательный Вес " + weight);
         }

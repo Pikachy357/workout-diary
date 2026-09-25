@@ -1,69 +1,65 @@
 import java.time.LocalDate;
 import java.util.*;
 
+
 public class Main {
     public static void main(String[] args) {
-        Scanner scaner = new Scanner(System.in);
-        double wight = 0;
-
+        Scanner scanner = new Scanner(System.in);
+        double weight = 0;
         int difficulty = 0,reps = 0;
         String comment = "empty";
         System.out.println("Идёт ввод данных подхода.");
-        boolean f = true;
-        while (f) {
-            try {
-                System.out.println("Введите Вес:");
-                wight = scaner.nextDouble();
-                if (wight <= 0){
-                    throw new IllegalArgumentException("вес не может быть :" + wight);
-                }
-                scaner.nextLine();
-                f = false;
-            } catch(Exception e) {
-                System.out.println("Ошибка : " + e + " попробуйте ещё раз.");
-            }
-        }
-        f = true;
-        while (f) {
-            try {
-                System.out.println("Введите кол-во раз:");
-                reps = scaner.nextInt();
-                scaner.nextLine();
-                f = false;
-            } catch(Exception e) {
-                System.out.println("Ошибка : " + e + " попробуйте ещё раз.");
-            }
-        }
-        f = true;
-        while (f) {
-            try {
-                System.out.println("Введите сложность (1-10):");
-                difficulty = scaner.nextInt();
-                if (difficulty<1 || difficulty>10){
-                    throw new IllegalArgumentException("Сложность вне диапазона от 1 до 10 " + difficulty);
-                }
-                scaner.nextLine();
-                f = false;
-            } catch(Exception e) {
-                System.out.println("Ошибка : " + e + " попробуйте ещё раз.");
-            }
-        }
-        f = true;
-        while (f) {
-            try {
-                System.out.println("Введите комментарий (одно слово):");
-                String [] buff  = scaner.nextLine().split(" ");
-                if (buff.length > 1) {
-                        throw new IllegalArgumentException("Вы ввели больше одного слова");
-                }
-                comment = buff[0];
-                f = false;
-            } catch(Exception e) {
-                System.out.println("Ошибка : " + e + " попробуйте ещё раз.");
-            }
-        }
-        ExerciseSet set = new ExerciseSet(wight, reps, difficulty, comment );
+        weight = readDouble(scanner, "Введите Вес:");
+        reps = readInt(scanner, "Введите кол-во раз:");
+        difficulty = readInt(scanner, "Введите сложность (1-10):");
+        comment = readString(scanner, "Введите комментарий (одно слово):");
+        ExerciseSet set = new ExerciseSet(weight, reps, difficulty, comment );
         System.out.println(set);
+        }
+    public static int readInt(Scanner scanner, String s) {
+        while (true) {
+            try {
+                System.out.println(s);
+                int value = scanner.nextInt();
+                return value;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Вы ввели не целое число, попробуйте ещё раз.");
+                scanner.nextLine();
+            }
+
+        }
+    }
+
+    public static double readDouble(Scanner scanner, String s) {
+        while (true) {
+            try {
+                System.out.println(s);
+                double value = scanner.nextDouble();
+                return value;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Вы ввели не число, попробуйте ещё раз.");
+                scanner.nextLine();
+            }
+        }
+    }
+    public static String readString(Scanner scanner, String s) {
+        while (true) {
+            try {
+                System.out.println(s);
+                String value = scanner.nextLine();
+                return value;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                scanner.nextLine();
+            }
+        }
+    }
        /* Map<String, Exercise> catalog = new HashMap<>();
 
         List<ExerciseSet> sets = new ArrayList<>();
@@ -113,6 +109,6 @@ public class Main {
         System.out.println("\n" + sets.get(0).describe());
         System.out.println("\n" + exercises.get(0).describe());
         System.out.println("\n" + workouts.get(0).describe()); */
-    }
 }
+
 
