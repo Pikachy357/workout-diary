@@ -5,26 +5,40 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        ExerciseSet set = null;
         double weight = 0;
-        int difficulty = 0,reps = 0;
+        int difficulty = 0, reps = 0;
         String comment = "empty";
-        System.out.println("Идёт ввод данных подхода.");
-        weight = readDouble(scanner, "Введите Вес:");
-        reps = readInt(scanner, "Введите кол-во раз:");
-        difficulty = readInt(scanner, "Введите сложность (1-10):");
-        comment = readString(scanner, "Введите комментарий (одно слово):");
-        ExerciseSet set = new ExerciseSet(weight, reps, difficulty, comment );
-        System.out.println(set);
+        boolean created = false;
+        while(!created) {
+            System.out.println("Идёт ввод данных подхода.");
+            weight = readDouble(scanner, "Введите Вес:");
+            reps = readInt(scanner, "Введите кол-во раз:", 1, 1000);
+            difficulty = readInt(scanner, "Введите сложность (1-10):", 1, 10);
+            comment = readString(scanner, "Введите комментарий :");
+            try{
+                set = new ExerciseSet(weight, reps, difficulty, comment);
+                created = true;
+            }
+            catch (IllegalArgumentException e){
+                System.out.println("Ошибка: " + e.getMessage() + " введите заново подход");
+            }
+
+
         }
-    public static int readInt(Scanner scanner, String s) {
+        System.out.println(set);
+    }
+    public static int readInt(Scanner scanner, String prompt, int min, int max) {
         while (true) {
             try {
-                System.out.println(s);
+                System.out.println(prompt);
                 int value = scanner.nextInt();
-                return value;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
                 scanner.nextLine();
+                if (value>=min && value<=max)
+                {
+                    return value;
+                }
+                System.out.println("Ошибка, число должно быть от " + min + " до " + max + " введите ещё раз.");
             } catch (InputMismatchException e) {
                 System.out.println("Вы ввели не целое число, попробуйте ещё раз.");
                 scanner.nextLine();
@@ -33,31 +47,31 @@ public class Main {
         }
     }
 
-    public static double readDouble(Scanner scanner, String s) {
+    public static double readDouble(Scanner scanner, String prompt) {
         while (true) {
             try {
-                System.out.println(s);
+                System.out.println(prompt);
                 double value = scanner.nextDouble();
-                return value;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
                 scanner.nextLine();
+                if (value >= 0)
+                {
+                    return value;
+                }
+                System.out.println("Ошибка, число должно быть не отрицательное, введите ещё раз.");
             } catch (InputMismatchException e) {
                 System.out.println("Вы ввели не число, попробуйте ещё раз.");
                 scanner.nextLine();
             }
         }
     }
-    public static String readString(Scanner scanner, String s) {
+    public static String readString(Scanner scanner, String prompt) {
         while (true) {
-            try {
-                System.out.println(s);
-                String value = scanner.nextLine();
+            System.out.println(prompt);
+            String value = scanner.nextLine();
+            if (!value.isBlank()){
                 return value;
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-                scanner.nextLine();
             }
+            System.out.println("Ошибка, пустая строка, введите ещё раз.");
         }
     }
        /* Map<String, Exercise> catalog = new HashMap<>();
