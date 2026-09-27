@@ -1,44 +1,24 @@
 import java.time.LocalDate;
 import java.util.*;
-
+import java.util.function.Predicate;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ExerciseSet set = null;
-        double weight = 0;
-        int difficulty = 0, reps = 0;
-        String comment = "empty";
-        boolean created = false;
-        while(!created) {
-            System.out.println("Идёт ввод данных подхода.");
-            weight = readDouble(scanner, "Введите Вес:");
-            reps = readInt(scanner, "Введите кол-во раз:", 1, 1000);
-            difficulty = readInt(scanner, "Введите сложность (1-10):", 1, 10);
-            comment = readString(scanner, "Введите комментарий :");
-            try{
-                set = new ExerciseSet(weight, reps, difficulty, comment);
-                created = true;
-            }
-            catch (IllegalArgumentException e){
-                System.out.println("Ошибка: " + e.getMessage() + " введите заново подход");
-            }
-
-
-        }
+        ExerciseSet set = readExerciseSet(scanner);
         System.out.println(set);
     }
-    public static int readInt(Scanner scanner, String prompt, int min, int max) {
+    public static int readInt(Scanner scanner, String prompt, Predicate<Integer> rule, String errorMessage) {
         while (true) {
             try {
                 System.out.println(prompt);
                 int value = scanner.nextInt();
                 scanner.nextLine();
-                if (value>=min && value<=max)
+                if (rule.test(value))
                 {
                     return value;
                 }
-                System.out.println("Ошибка, число должно быть от " + min + " до " + max + " введите ещё раз.");
+                System.out.println(errorMessage);
             } catch (InputMismatchException e) {
                 System.out.println("Вы ввели не целое число, попробуйте ещё раз.");
                 scanner.nextLine();
@@ -47,17 +27,17 @@ public class Main {
         }
     }
 
-    public static double readDouble(Scanner scanner, String prompt) {
+    public static double readDouble(Scanner scanner, String prompt, Predicate<Double> rule, String errorMessage) {
         while (true) {
             try {
                 System.out.println(prompt);
                 double value = scanner.nextDouble();
                 scanner.nextLine();
-                if (value >= 0)
+                if (rule.test(value))
                 {
                     return value;
                 }
-                System.out.println("Ошибка, число должно быть не отрицательное, введите ещё раз.");
+                System.out.println(errorMessage);
             } catch (InputMismatchException e) {
                 System.out.println("Вы ввели не число, попробуйте ещё раз.");
                 scanner.nextLine();
@@ -72,6 +52,22 @@ public class Main {
                 return value;
             }
             System.out.println("Ошибка, пустая строка, введите ещё раз.");
+        }
+    }
+
+    public static ExerciseSet readExerciseSet(Scanner scanner){
+        while(true) {
+            System.out.println("Идёт ввод данных подхода.");
+            double weight = readDouble(scanner, "Введите Вес:", v -> v>=0, "Ошибка, вес должен быть не отрицательным.");
+            int reps = readInt(scanner, "Введите кол-во раз:", v -> v >= 1 && v <= 1000, "Ошибка, диапазон может быть от 1 до 1000.");
+            int difficulty = readInt(scanner, "Введите сложность (1-10):", v -> v>=1 && v<=10, "Ошибка, диапазон может быть от 1 до 10.");
+            String comment = readString(scanner, "Введите коментарий: ");
+            try{
+                return new ExerciseSet(weight, reps, difficulty, comment);
+            }
+            catch (IllegalArgumentException e){
+                System.out.println("Ошибка: " + e.getMessage() + " введите заново подход");
+            }
         }
     }
        /* Map<String, Exercise> catalog = new HashMap<>();
