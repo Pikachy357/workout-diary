@@ -5,8 +5,20 @@ import java.util.function.Predicate;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ExerciseSet set = readExerciseSet(scanner);
-        System.out.println(set);
+        System.out.println("Идёт ввод упражнения: ");
+        Exercise exercise = new Exercise(readString(scanner, "Введите название упражения: "), readString(scanner, "Введите описание упражения: "), new ArrayList<>());
+        boolean next = true;
+        int count = 1;
+        do {
+            System.out.println("Ввод подхода №" + count++);
+            exercise.addSet(readExerciseSet(scanner));
+            String enter = readString(scanner, "Подход введён, ввести ещё подход ? \n Введите 'n' - для ввода следующего подхода\n Введите не 'n' для прекращения ввода.");
+            if (enter.charAt(0) != 'n'){
+                next = false;
+            }
+        }while (next);
+
+        System.out.println(exercise);
     }
     public static int readInt(Scanner scanner, String prompt, Predicate<Integer> rule, String errorMessage) {
         while (true) {
