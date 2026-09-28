@@ -7,16 +7,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Идёт ввод упражнения: ");
         Exercise exercise = new Exercise(readString(scanner, "Введите название упражения: "), readString(scanner, "Введите описание упражения: "), new ArrayList<>());
-        boolean next = true;
         int count = 1;
         do {
             System.out.println("Ввод подхода №" + count++);
             exercise.addSet(readExerciseSet(scanner));
-            String enter = readString(scanner, "Подход введён, ввести ещё подход ? \n Введите 'n' - для ввода следующего подхода\n Введите не 'n' для прекращения ввода.");
-            if (enter.charAt(0) != 'n'){
-                next = false;
-            }
-        }while (next);
+        }while (readYesNo(scanner,"Подход введён, ввести ещё подход ?"));
 
         System.out.println(exercise);
     }
@@ -80,6 +75,22 @@ public class Main {
             catch (IllegalArgumentException e){
                 System.out.println("Ошибка: " + e.getMessage() + " введите заново подход");
             }
+        }
+    }
+
+    public static boolean readYesNo(Scanner scanner, String prompt){
+        System.out.println(prompt);
+        while (true) {
+            String enter = readString(scanner,"Введите 'да' или 'нет' :");
+            boolean yes = enter.trim().equalsIgnoreCase("да");
+            boolean no = enter.trim().equalsIgnoreCase("нет");
+            if (yes) {
+                return yes;
+            }
+            if (no) {
+                return !no;
+            }
+            System.out.println("Вы ввели не верно.");
         }
     }
        /* Map<String, Exercise> catalog = new HashMap<>();
