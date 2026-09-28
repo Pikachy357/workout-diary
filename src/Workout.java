@@ -42,13 +42,13 @@ public class Workout implements Describable {
     }
 
     public double getTotalVolume() {
-        return exercises.stream().mapToDouble(s -> s.getTotalVolume()).sum();
+        return exercises.stream().mapToDouble(e -> e.getTotalVolume()).sum();
     }
 
     public String getStatistics(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Кол-во упражнений: ").append(exercises.size()).append("\n");;
-        sb.append("Общий тонаж за тренировку: ").append(getTotalVolume()).append("\n\n");
+        sb.append("Кол-во упражнений: ").append(exercises.size()).append("\n");
+        sb.append("Общий тоннаж за тренировку: ").append(getTotalVolume()).append("\n\n");
         int number = 1;
         for(Exercise e:exercises){
             sb.append(number++).append(") ").append(e.getStatistics());

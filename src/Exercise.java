@@ -48,7 +48,7 @@ public class Exercise implements Describable {
         StringBuilder sb = new StringBuilder();
         sb.append("Упражнение : ").append(name).append("\n");
         sb.append("Тонаж за упражнение : ").append(getTotalVolume()).append("\n");
-        sb.append("Max вес упражнения ").append(getMaxWeight()).append("\n");
+        sb.append("Max вес упражнения : ").append(getMaxWeight()).append("\n");
         return sb.toString();
     }
 
