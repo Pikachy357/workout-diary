@@ -3,7 +3,6 @@ public class ExerciseSet implements Describable {
     private int reps;
     private int difficulty;
     private String comment;
-    private int number = 0;
 
     public ExerciseSet(double weight, int reps, int difficulty, String comment) {
         if (weight < 0) {
@@ -22,10 +21,6 @@ public class ExerciseSet implements Describable {
         this.reps = reps;
         this.difficulty = difficulty;
         this.comment = comment;
-        number++;
-    }
-    public int getNumber(){
-        return number;
     }
 
     public double getWeight() {

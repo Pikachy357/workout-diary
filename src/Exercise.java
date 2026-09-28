@@ -44,6 +44,14 @@ public class Exercise implements Describable {
         return sets.stream().mapToInt(s-> s.getDifficulty()).average().orElse(0);
     }
 
+    public String getStatistics(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Упражнение : ").append(name).append("\n");
+        sb.append("Тонаж за упражнение : ").append(getTotalVolume()).append("\n");
+        sb.append("Max вес упражнения ").append(getMaxWeight()).append("\n");
+        return sb.toString();
+    }
+
     public void addSet(ExerciseSet set) {
         if (set == null) {
             throw new IllegalArgumentException("Нельзя добавть null подходов");

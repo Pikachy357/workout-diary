@@ -7,6 +7,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Workout workout = readWorkout(scanner);
         System.out.println(workout);
+        System.out.println(workout.getStatistics());
 
     }
     public static int readInt(Scanner scanner, String prompt, Predicate<Integer> rule, String errorMessage) {
@@ -109,18 +110,6 @@ public class Main {
             workout.addExercise(readExercise(scanner));
         }while (readYesNo(scanner, "Упражнение введено, хотите ввести ещё упражнение ?"));
         return workout;
-    }
-
-    public static void getStatisticWorkout(Workout workout){
-        System.out.println("Общий тонаж за тренировку: " + workout.getTotalVolume());
-
-    }
-
-    public static void getStatisticExercise(Exercise exercise){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Упражнение : ").append(exercise.getName());
-        sb.append("Тонаж за упражнение : ").append(exercise.getTotalVolume()).append("\n");
-        sb.append("Max вес упр")
     }
 
 }

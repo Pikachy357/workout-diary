@@ -45,6 +45,16 @@ public class Workout implements Describable {
         return exercises.stream().mapToDouble(s -> s.getTotalVolume()).sum();
     }
 
+    public String getStatistics(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Общий тонаж за тренировку: ").append(getTotalVolume()).append("\n\n");
+        int number = 1;
+        for(Exercise e:exercises){
+            sb.append(number++).append(") ").append(e.getStatistics());
+        }
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
