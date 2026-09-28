@@ -47,6 +47,7 @@ public class Workout implements Describable {
 
     public String getStatistics(){
         StringBuilder sb = new StringBuilder();
+        sb.append("Кол-во упражнений: ").append(exercises.size()).append("\n");;
         sb.append("Общий тонаж за тренировку: ").append(getTotalVolume()).append("\n\n");
         int number = 1;
         for(Exercise e:exercises){
