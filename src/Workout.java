@@ -41,6 +41,10 @@ public class Workout implements Describable {
         exercises.add(exercise);
     }
 
+    public double getTotalVolume() {
+        return exercises.stream().mapToDouble(s -> s.getTotalVolume()).sum();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

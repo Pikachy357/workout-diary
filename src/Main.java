@@ -5,15 +5,9 @@ import java.util.function.Predicate;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Идёт ввод упражнения: ");
-        Exercise exercise = new Exercise(readString(scanner, "Введите название упражения: "), readString(scanner, "Введите описание упражения: "), new ArrayList<>());
-        int count = 1;
-        do {
-            System.out.println("Ввод подхода №" + count++);
-            exercise.addSet(readExerciseSet(scanner));
-        }while (readYesNo(scanner,"Подход введён, ввести ещё подход ?"));
+        Workout workout = readWorkout(scanner);
+        System.out.println(workout);
 
-        System.out.println(exercise);
     }
     public static int readInt(Scanner scanner, String prompt, Predicate<Integer> rule, String errorMessage) {
         while (true) {
@@ -64,7 +58,6 @@ public class Main {
 
     public static ExerciseSet readExerciseSet(Scanner scanner){
         while(true) {
-            System.out.println("Идёт ввод данных подхода.");
             double weight = readDouble(scanner, "Введите Вес:", v -> v>=0, "Ошибка, вес должен быть не отрицательным.");
             int reps = readInt(scanner, "Введите кол-во раз:", v -> v >= 1 && v <= 1000, "Ошибка, диапазон может быть от 1 до 1000.");
             int difficulty = readInt(scanner, "Введите сложность (1-10):", v -> v>=1 && v<=10, "Ошибка, диапазон может быть от 1 до 10.");
@@ -81,9 +74,9 @@ public class Main {
     public static boolean readYesNo(Scanner scanner, String prompt){
         System.out.println(prompt);
         while (true) {
-            String enter = readString(scanner,"Введите 'да' или 'нет' :");
-            boolean yes = enter.trim().equalsIgnoreCase("да");
-            boolean no = enter.trim().equalsIgnoreCase("нет");
+            String enter = readString(scanner,"Введите 'да' или 'нет' :").trim();
+            boolean yes = enter.equalsIgnoreCase("да");
+            boolean no = enter.equalsIgnoreCase("нет");
             if (yes) {
                 return yes;
             }
@@ -93,55 +86,43 @@ public class Main {
             System.out.println("Вы ввели не верно.");
         }
     }
-       /* Map<String, Exercise> catalog = new HashMap<>();
 
-        List<ExerciseSet> sets = new ArrayList<>();
-        sets.add(new ExerciseSet(80, 10, 5, "norm"));
-        sets.add(new ExerciseSet(80, 9, 7, "hard"));
-        catalog.put("Приседания", new Exercise("Приседания", "Приседания со штангой", sets));
+    public static Exercise readExercise(Scanner scanner){
+        String name = readString(scanner, "Введите название упражнения: ");
+        String description = readString(scanner, "Введите описание упражнения: ");
+        Exercise exercise = new Exercise(name, description, new ArrayList<>());
+        int count = 1;
+        do {
+            System.out.println("Ввод подхода №" + count++);
+            exercise.addSet(readExerciseSet(scanner));
+        }while (readYesNo(scanner,"Подход введён, ввести ещё подход ?"));
+        return exercise;
+    }
 
-        List<ExerciseSet> sets2 = new ArrayList<>();
-        sets2.add(new ExerciseSet(100, 6, 7, "norm"));
-        sets2.add(new ExerciseSet(110, 4, 9, "hard"));
-        catalog.put("Жим", new Exercise("Жим", "Жим лёжа со штангой", sets2));
+    public static Workout readWorkout(Scanner scanner){
+        System.out.println("Идёт ввод тренировки:");
+        String name = readString(scanner, "Введите название тренировки");
+        Workout workout = new Workout(LocalDate.now(), name, new ArrayList<>());
+        int count = 1;
+        do {
+            System.out.println("Идёт ввод упражнения №" + count++);
+            workout.addExercise(readExercise(scanner));
+        }while (readYesNo(scanner, "Упражнение введено, хотите ввести ещё упражнение ?"));
+        return workout;
+    }
 
-        List<Exercise> exercises = new ArrayList<>();
-        exercises.add(catalog.get("Приседания"));
-        exercises.add(catalog.get("Жим"));
+    public static void getStatisticWorkout(Workout workout){
+        System.out.println("Общий тонаж за тренировку: " + workout.getTotalVolume());
 
-        List<Workout> workouts = new ArrayList<>();
-        workouts.add(new Workout(LocalDate.of(2026, 6, 1), "Жим и присед", exercises));
+    }
 
+    public static void getStatisticExercise(Exercise exercise){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Упражнение : ").append(exercise.getName());
+        sb.append("Тонаж за упражнение : ").append(exercise.getTotalVolume()).append("\n");
+        sb.append("Max вес упр")
+    }
 
-        System.out.println("Упраженений в тренировке: " + workouts.get(0).getExercises().size());
-        System.out.println("Первое упражнение " + workouts.get(0).getExercises().get(0).getName());
-
-        // проверка методов: getTotalVolume, getAverageDifficulty, getMaxWeight
-        System.out.print("Тоннаж первого упражнения: " + workouts.get(0).getExercises().get(0).getTotalVolume());
-        System.out.println("средняя сложность за Жим: " + catalog.get("Жим").getAverageDifficulty());
-        System.out.println("максимальный вес за Приседания: " + catalog.get("Приседания").getMaxWeight());
-
-        // запрос 1 по каталогу
-        String query = "прыжок";
-        if (catalog.containsKey(query)) {
-            Exercise found = catalog.get(query);
-            System.out.println("Пользователь запросил " + query + "Название :" + found.getName() + "Описание: " + found.getDescription());
-        } else {
-            System.out.println("Пользователь запросил *" + query + "* \nУпражнение *" + query + "* не найдено в справочнике");
-        }
-        // запрос 2 по каталогу
-        query = "Жим";
-        if (catalog.containsKey(query)) {
-            Exercise found = catalog.get(query);
-            System.out.println("Пользователь запросил *" + query + "*\nНазвание: " + found.getName() + "\nОписание: " + found.getDescription());
-        } else {
-            System.out.println("Пользователь запросил *" + query + "* \nУпражнение *" + query + "* не найдено в справочнике");
-        }
-
-        // краткое описание всех первых
-        System.out.println("\n" + sets.get(0).describe());
-        System.out.println("\n" + exercises.get(0).describe());
-        System.out.println("\n" + workouts.get(0).describe()); */
 }
 
 
