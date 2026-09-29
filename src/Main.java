@@ -6,7 +6,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Main {
+
+    private static final Predicate<String> TEXT_RULE = v -> !v.contains(";") && !v.isBlank();
+    private static final String TEXT_ERROR_MESSAGE = "Ошибка ввода, вы ввели пустую строку или использовали запрещённый символ ';' .";
+
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         Workout workout = readWorkout(scanner);
         System.out.println(workout);
@@ -72,7 +77,7 @@ public class Main {
             double weight = readDouble(scanner, "Введите Вес:", v -> v >= 0, "Ошибка, вес должен быть не отрицательным.");
             int reps = readInt(scanner, "Введите кол-во раз:", v -> v >= 1 && v <= 1000, "Ошибка, диапазон может быть от 1 до 1000.");
             int difficulty = readInt(scanner, "Введите сложность (1-10):", v -> v >= 1 && v <= 10, "Ошибка, диапазон может быть от 1 до 10.");
-            String comment = readString(scanner, "Введите коментарий (запрещенный символ '" + "' ): ", v -> !v.contains(";") && v.isBlank(), "Ошибка ввода, вы ввели пустую строку или использовали запрещённый символ ';' .");
+            String comment = readString(scanner, "Введите коментарий (запрещенный символ ';' ): ", TEXT_RULE, TEXT_ERROR_MESSAGE);
             try {
                 return new ExerciseSet(weight, reps, difficulty, comment);
             } catch (IllegalArgumentException e) {
@@ -84,7 +89,7 @@ public class Main {
     public static boolean readYesNo(Scanner scanner, String prompt) {
         System.out.println(prompt);
         while (true) {
-            String enter = readString(scanner, "Введите 'да' или 'нет' :",v-> v.isBlank(), "Ошибка ввода, вы ввели пустую строку.").trim();
+            String enter = readString(scanner, "Введите 'да' или 'нет' :", v -> !v.isBlank(), "Ошибка ввода, вы ввели пустую строку.").trim();
             boolean yes = enter.equalsIgnoreCase("да");
             boolean no = enter.equalsIgnoreCase("нет");
             if (yes) {
@@ -98,8 +103,8 @@ public class Main {
     }
 
     public static Exercise readExercise(Scanner scanner) {
-        String name = readString(scanner, "Введите название упражнения (запрещенный символ ';' ): " , v -> !v.contains(";") && v.isBlank(), "Ошибка ввода, вы ввели пустую строку или использовали запрещённый символ ';' .");
-        String description = readString(scanner, "Введите описание упражнения (запрещенный символ ';' ): ",  v -> !v.contains(";") && v.isBlank(), "Ошибка ввода, вы ввели пустую строку или использовали запрещённый символ ';' .");
+        String name = readString(scanner, "Введите название упражнения (запрещенный символ ';' ): ", TEXT_RULE, TEXT_ERROR_MESSAGE);
+        String description = readString(scanner, "Введите описание упражнения (запрещенный символ ';' ): ", TEXT_RULE, TEXT_ERROR_MESSAGE);
         Exercise exercise = new Exercise(name, description, new ArrayList<>());
         int count = 1;
         do {
@@ -111,7 +116,7 @@ public class Main {
 
     public static Workout readWorkout(Scanner scanner) {
         System.out.println("Идёт ввод тренировки:");
-        String name = readString(scanner, "Введите название тренировки (запрещенный символ ';' ): ",  v -> !v.contains(";") && v.isBlank(), "Ошибка ввода, вы ввели пустую строку или использовали запрещённый символ ';' .");
+        String name = readString(scanner, "Введите название тренировки (запрещенный символ ';' ): ", TEXT_RULE, TEXT_ERROR_MESSAGE);
         Workout workout = new Workout(LocalDate.now(), name, new ArrayList<>());
         int count = 1;
         do {
