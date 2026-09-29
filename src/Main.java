@@ -28,11 +28,10 @@ public class Main {
         List<Workout> workouts = null;
         try {
             workouts = storage.loadAll();
+            workouts.forEach(v -> System.out.println(v));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
-        workouts.forEach(v -> System.out.println(v));
 
 
     }
