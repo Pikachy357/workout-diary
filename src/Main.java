@@ -1,28 +1,39 @@
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.function.Predicate;
-import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class Main {
-
     private static final Predicate<String> TEXT_RULE = v -> !v.contains(";") && !v.isBlank();
     private static final String TEXT_ERROR_MESSAGE = "Ошибка ввода, вы ввели пустую строку или использовали запрещённый символ ';' .";
 
     public static void main(String[] args) {
+//        Scanner scanner = new Scanner(System.in);
+//        Workout workout = readWorkout(scanner);
+//        System.out.println(workout);
+//        System.out.println(workout.getStatistics());
 
-        Scanner scanner = new Scanner(System.in);
-        Workout workout = readWorkout(scanner);
-        System.out.println(workout);
-        System.out.println(workout.getStatistics());
+
         WorkoutStorage storage = new WorkoutStorage(Path.of("workouts.txt"));
+//        try {
+//            storage.save(workout);
+//            System.out.println("Сохранено: " + storage.getPath().toAbsolutePath());
+//        } catch (IOException e) {
+//            System.out.println("Не удалось сохранить в файл. Ошибка : " + e.getMessage());
+//        }
+        List<Workout> workouts = null;
         try {
-            storage.save(workout);
-            System.out.println("Сохранено: " + storage.getPath().toAbsolutePath());
+            workouts = storage.loadAll();
         } catch (IOException e) {
-            System.out.println("Не удалось сохранить в файл. Ошибка : " + e.getMessage());
+            System.out.println(e.getMessage());
         }
+
+        workouts.forEach(v -> System.out.println(v));
+
 
     }
 
