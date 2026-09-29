@@ -1,6 +1,9 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Predicate;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,16 +11,23 @@ public class Main {
         Workout workout = readWorkout(scanner);
         System.out.println(workout);
         System.out.println(workout.getStatistics());
+        WorkoutStorage storage = new WorkoutStorage(Path.of("workouts.txt"));
+        try {
+            storage.save(workout);
+            System.out.println("Сохранено: " + storage.getPath().toAbsolutePath());
+        } catch (IOException e) {
+            System.out.println("Не удалось сохранить в файл. Ошибка : " + e.getMessage());
+        }
 
     }
+
     public static int readInt(Scanner scanner, String prompt, Predicate<Integer> rule, String errorMessage) {
         while (true) {
             try {
                 System.out.println(prompt);
                 int value = scanner.nextInt();
                 scanner.nextLine();
-                if (rule.test(value))
-                {
+                if (rule.test(value)) {
                     return value;
                 }
                 System.out.println(errorMessage);
@@ -35,8 +45,7 @@ public class Main {
                 System.out.println(prompt);
                 double value = scanner.nextDouble();
                 scanner.nextLine();
-                if (rule.test(value))
-                {
+                if (rule.test(value)) {
                     return value;
                 }
                 System.out.println(errorMessage);
@@ -46,36 +55,36 @@ public class Main {
             }
         }
     }
-    public static String readString(Scanner scanner, String prompt) {
+
+    public static String readString(Scanner scanner, String prompt, Predicate<String> rule, String errorMessage) {
         while (true) {
             System.out.println(prompt);
             String value = scanner.nextLine();
-            if (!value.isBlank()){
+            if (rule.test(value)) {
                 return value;
             }
-            System.out.println("Ошибка, пустая строка, введите ещё раз.");
+            System.out.println(errorMessage);
         }
     }
 
-    public static ExerciseSet readExerciseSet(Scanner scanner){
-        while(true) {
-            double weight = readDouble(scanner, "Введите Вес:", v -> v>=0, "Ошибка, вес должен быть не отрицательным.");
+    public static ExerciseSet readExerciseSet(Scanner scanner) {
+        while (true) {
+            double weight = readDouble(scanner, "Введите Вес:", v -> v >= 0, "Ошибка, вес должен быть не отрицательным.");
             int reps = readInt(scanner, "Введите кол-во раз:", v -> v >= 1 && v <= 1000, "Ошибка, диапазон может быть от 1 до 1000.");
-            int difficulty = readInt(scanner, "Введите сложность (1-10):", v -> v>=1 && v<=10, "Ошибка, диапазон может быть от 1 до 10.");
-            String comment = readString(scanner, "Введите коментарий: ");
-            try{
+            int difficulty = readInt(scanner, "Введите сложность (1-10):", v -> v >= 1 && v <= 10, "Ошибка, диапазон может быть от 1 до 10.");
+            String comment = readString(scanner, "Введите коментарий (запрещенный символ '" + "' ): ", v -> !v.contains(";") && v.isBlank(), "Ошибка ввода, вы ввели пустую строку или использовали запрещённый символ ';' .");
+            try {
                 return new ExerciseSet(weight, reps, difficulty, comment);
-            }
-            catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.println("Ошибка: " + e.getMessage() + " введите заново подход");
             }
         }
     }
 
-    public static boolean readYesNo(Scanner scanner, String prompt){
+    public static boolean readYesNo(Scanner scanner, String prompt) {
         System.out.println(prompt);
         while (true) {
-            String enter = readString(scanner,"Введите 'да' или 'нет' :").trim();
+            String enter = readString(scanner, "Введите 'да' или 'нет' :",v-> v.isBlank(), "Ошибка ввода, вы ввели пустую строку.").trim();
             boolean yes = enter.equalsIgnoreCase("да");
             boolean no = enter.equalsIgnoreCase("нет");
             if (yes) {
@@ -88,27 +97,27 @@ public class Main {
         }
     }
 
-    public static Exercise readExercise(Scanner scanner){
-        String name = readString(scanner, "Введите название упражнения: ");
-        String description = readString(scanner, "Введите описание упражнения: ");
+    public static Exercise readExercise(Scanner scanner) {
+        String name = readString(scanner, "Введите название упражнения (запрещенный символ ';' ): " , v -> !v.contains(";") && v.isBlank(), "Ошибка ввода, вы ввели пустую строку или использовали запрещённый символ ';' .");
+        String description = readString(scanner, "Введите описание упражнения (запрещенный символ ';' ): ",  v -> !v.contains(";") && v.isBlank(), "Ошибка ввода, вы ввели пустую строку или использовали запрещённый символ ';' .");
         Exercise exercise = new Exercise(name, description, new ArrayList<>());
         int count = 1;
         do {
             System.out.println("Ввод подхода №" + count++);
             exercise.addSet(readExerciseSet(scanner));
-        }while (readYesNo(scanner,"Подход введён, ввести ещё подход ?"));
+        } while (readYesNo(scanner, "Подход введён, ввести ещё подход ?"));
         return exercise;
     }
 
-    public static Workout readWorkout(Scanner scanner){
+    public static Workout readWorkout(Scanner scanner) {
         System.out.println("Идёт ввод тренировки:");
-        String name = readString(scanner, "Введите название тренировки");
+        String name = readString(scanner, "Введите название тренировки (запрещенный символ ';' ): ",  v -> !v.contains(";") && v.isBlank(), "Ошибка ввода, вы ввели пустую строку или использовали запрещённый символ ';' .");
         Workout workout = new Workout(LocalDate.now(), name, new ArrayList<>());
         int count = 1;
         do {
             System.out.println("Идёт ввод упражнения №" + count++);
             workout.addExercise(readExercise(scanner));
-        }while (readYesNo(scanner, "Упражнение введено, хотите ввести ещё упражнение ?"));
+        } while (readYesNo(scanner, "Упражнение введено, хотите ввести ещё упражнение ?"));
         return workout;
     }
 
