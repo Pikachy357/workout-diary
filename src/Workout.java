@@ -3,21 +3,9 @@ import java.util.List;
 
 public class Workout implements Describable {
 
-    private LocalDate workoutDate;
-    private String name;
-    private List<Exercise> exercises;
-
-    public LocalDate getWorkoutDate() {
-        return workoutDate;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Exercise> getExercises() {
-        return exercises;
-    }
+    private final LocalDate workoutDate;
+    private final String name;
+    private final List<Exercise> exercises;
 
     public Workout(LocalDate workoutDate, String name, List<Exercise> exercise) {
         if (workoutDate == null) {
@@ -34,6 +22,18 @@ public class Workout implements Describable {
         this.exercises = exercise;
     }
 
+    public LocalDate getWorkoutDate() {
+        return workoutDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Exercise> getExercises() {
+        return exercises;
+    }
+
     public void addExercise(Exercise exercise) {
         if (exercise == null) {
             throw new IllegalArgumentException("Нельзя добавить null упражение");
@@ -45,12 +45,12 @@ public class Workout implements Describable {
         return exercises.stream().mapToDouble(e -> e.getTotalVolume()).sum();
     }
 
-    public String getStatistics(){
+    public String getStatistics() {
         StringBuilder sb = new StringBuilder();
         sb.append("Кол-во упражнений: ").append(exercises.size()).append("\n");
         sb.append("Общий тоннаж за тренировку: ").append(getTotalVolume()).append("\n\n");
         int number = 1;
-        for(Exercise e:exercises){
+        for (Exercise e : exercises) {
             sb.append(number++).append(") ").append(e.getStatistics());
         }
         return sb.toString();

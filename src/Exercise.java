@@ -1,9 +1,9 @@
 import java.util.List;
 
 public class Exercise implements Describable {
-    private String name;
-    private String description;
-    private List<ExerciseSet> sets;
+    private final String name;
+    private final String description;
+    private final List<ExerciseSet> sets;
 
     public Exercise(String name, String description, List<ExerciseSet> sets) {
         if (name == null || name.isBlank()) {
@@ -33,23 +33,22 @@ public class Exercise implements Describable {
     }
 
     public double getTotalVolume() {
-        return sets.stream().mapToDouble(s -> s.getWeight()*s.getReps()).sum();
+        return sets.stream().mapToDouble(s -> s.getWeight() * s.getReps()).sum();
     }
 
-    public double getMaxWeight(){
+    public double getMaxWeight() {
         return sets.stream().mapToDouble(s -> s.getWeight()).max().orElse(0);
     }
 
     public double getAverageDifficulty() {
-        return sets.stream().mapToInt(s-> s.getDifficulty()).average().orElse(0);
+        return sets.stream().mapToInt(s -> s.getDifficulty()).average().orElse(0);
     }
 
-    public String getStatistics(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Упражнение : ").append(name).append("\n");
-        sb.append("Тонаж за упражнение : ").append(getTotalVolume()).append("\n");
-        sb.append("Max вес упражнения : ").append(getMaxWeight()).append("\n");
-        return sb.toString();
+    public String getStatistics() {
+        String sb = "Упражнение : " + name + "\n" +
+                "Тонаж за упражнение : " + getTotalVolume() + "\n" +
+                "Max вес упражнения : " + getMaxWeight() + "\n";
+        return sb;
     }
 
     public void addSet(ExerciseSet set) {

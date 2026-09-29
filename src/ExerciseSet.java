@@ -1,8 +1,8 @@
 public class ExerciseSet implements Describable {
-    private double weight;
-    private int reps;
-    private int difficulty;
-    private String comment;
+    private final double weight;
+    private final int reps;
+    private final int difficulty;
+    private final String comment;
 
     public ExerciseSet(double weight, int reps, int difficulty, String comment) {
         if (weight < 0) {

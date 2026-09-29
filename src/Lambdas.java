@@ -6,7 +6,7 @@ interface IntOperation {
 }
 
 public class Lambdas {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         IntOperation x, y, z;
         x = e -> e * 2;
         y = e -> e * e;
