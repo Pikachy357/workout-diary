@@ -12,27 +12,29 @@ public class Main {
     private static final String TEXT_ERROR_MESSAGE = "Ошибка ввода, вы ввели пустую строку или использовали запрещённый символ ';' .";
 
     public static void main(String[] args) {
-//        Scanner scanner = new Scanner(System.in);
-//        Workout workout = readWorkout(scanner);
-//        System.out.println(workout);
-//        System.out.println(workout.getStatistics());
-
-
+        List<Workout> history;
         WorkoutStorage storage = new WorkoutStorage(Path.of("workouts.txt"));
-//        try {
-//            storage.save(workout);
-//            System.out.println("Сохранено: " + storage.getPath().toAbsolutePath());
-//        } catch (IOException e) {
-//            System.out.println("Не удалось сохранить в файл. Ошибка : " + e.getMessage());
-//        }
-        List<Workout> workouts = null;
         try {
-            workouts = storage.loadAll();
-            workouts.forEach(v -> System.out.println(v));
+            history = storage.loadAll();
+            System.out.println("Загружено тренировоко: " + history.size());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Не удалось загрузить историю: " + e.getMessage());
+            history = new ArrayList<>();
         }
+        System.out.println("Вывод истории: ");
+        history.forEach(w->System.out.println(w));
 
+        Scanner scanner = new Scanner(System.in);
+        Workout workout = readWorkout(scanner);
+        System.out.println(workout);
+        System.out.println(workout.getStatistics());
+
+        try {
+            storage.save(workout);
+            System.out.println("Сохранено: " + storage.getPath().toAbsolutePath());
+        } catch (IOException e) {
+            System.out.println("Не удалось сохранить в файл. Ошибка : " + e.getMessage());
+        }
 
     }
 
