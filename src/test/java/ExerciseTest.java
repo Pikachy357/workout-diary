@@ -17,7 +17,7 @@ class ExerciseTest {
     }
 
     @Test
-    void maxWeightIsSets(){
+    void maxWeightIsHeaviestSet(){
         Exercise press = new Exercise("Жим", "Со штангой", new ArrayList<>());
         press.addSet(new ExerciseSet(80, 10, 5, "разминка"));
         press.addSet(new ExerciseSet(100, 8, 7, "рабочий"));
@@ -34,7 +34,7 @@ class ExerciseTest {
                 () -> new ExerciseSet(-5, 10, 5, "ой"));
     }
     @Test
-    void outOfRangeDifficulty(){
+    void difficultyAboveTenIsRejected(){
         assertThrows(IllegalArgumentException.class, () -> new ExerciseSet(100, 5, 11,"Бац Бац"));
     }
 }
