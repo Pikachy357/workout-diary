@@ -1,9 +1,11 @@
 package sandbox;
-import src.main.java.Exercise;
+
+import sandbox.tools.Greeter;
+import sandbox.tools.*;
 
 public class Probe {
     public static void main(String [] args) {
-        Exercise e = new Exercise("Жим", "Тест", new java.util.ArrayList<>());
-        System.out.println(e);
+        Greeter greeter = new Greeter();
+        System.out.println(greeter.greet("Даниил"));
     }
 }
