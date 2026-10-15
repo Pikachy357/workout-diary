@@ -37,4 +37,11 @@ class ExerciseTest {
     void difficultyAboveTenIsRejected(){
         assertThrows(IllegalArgumentException.class, () -> new ExerciseSet(100, 5, 11,"Бац Бац"));
     }
+    @Test
+    void setsCannotBeModifiedFromOutside(){
+        Exercise press = new Exercise("Жим", "Со штангой", new ArrayList<>());
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> press.getSets().add(new ExerciseSet(100, 5, 8, "В обход")));
+    }
 }
