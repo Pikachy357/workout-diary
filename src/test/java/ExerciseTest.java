@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -43,5 +44,12 @@ class ExerciseTest {
 
         assertThrows(UnsupportedOperationException.class,
                 () -> press.getSets().add(new ExerciseSet(100, 5, 8, "В обход")));
+    }
+    @Test
+    void execiseKeepOwnOfSetsList() {
+        List<ExerciseSet> sets = new ArrayList<>();
+        Exercise press = new Exercise("Жим", "Со штангой", sets);
+        sets.add(new ExerciseSet(100,5,8,"В обход"));
+        assertEquals(0,press.getSets().size());
     }
 }
