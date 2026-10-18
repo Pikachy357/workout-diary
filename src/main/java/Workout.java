@@ -19,7 +19,7 @@ public class Workout implements Describable {
         }
         this.workoutDate = workoutDate;
         this.name = name;
-        this.exercises = exercise;
+        this.exercises = List.copyOf(exercise);
     }
 
     public LocalDate getWorkoutDate() {

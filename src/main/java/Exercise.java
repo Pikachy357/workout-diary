@@ -17,7 +17,7 @@ public class Exercise implements Describable {
         }
         this.name = name;
         this.description = description;
-        this.sets = sets;
+        this.sets = List.copyOf(sets);
     }
 
     public String getName() {
