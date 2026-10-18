@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Workout implements Describable {
@@ -19,7 +20,7 @@ public class Workout implements Describable {
         }
         this.workoutDate = workoutDate;
         this.name = name;
-        this.exercises = List.copyOf(exercise);
+        this.exercises = new ArrayList<>(exercise);
     }
 
     public LocalDate getWorkoutDate() {

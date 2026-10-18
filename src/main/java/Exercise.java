@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Exercise implements Describable {
@@ -17,7 +18,7 @@ public class Exercise implements Describable {
         }
         this.name = name;
         this.description = description;
-        this.sets = List.copyOf(sets);
+        this.sets = new ArrayList<>(sets);
     }
 
     public String getName() {
