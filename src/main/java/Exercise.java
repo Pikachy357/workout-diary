@@ -29,7 +29,7 @@ public class Exercise implements Describable {
     }
 
     public List<ExerciseSet> getSets() {
-        return sets;
+        return List.copyOf(sets);
     }
 
     public double getTotalVolume() {

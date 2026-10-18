@@ -31,7 +31,7 @@ public class Workout implements Describable {
     }
 
     public List<Exercise> getExercises() {
-        return exercises;
+        return List.copyOf(exercises);
     }
 
     public void addExercise(Exercise exercise) {
