@@ -1,3 +1,5 @@
+package io.github.pikachy357.workoutdiary.model;
+
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;

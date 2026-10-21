@@ -1,4 +1,4 @@
-# Workout Diary
+# io.github.pikachy357.workoutdiary.model.Workout Diary
 
 Консольный дневник тренировок на Java — учебный pet-проект.
 
@@ -56,7 +56,7 @@ SET;100.0;8;7;рабочий
 
 ```
 mvn compile
-java -cp target/classes Main
+java -cp target/classes io.github.pikachy357.workoutdiary.Main
 ```
 
 Или открыть проект в IntelliJ IDEA и запустить `Main.main()`.
@@ -85,7 +85,7 @@ java -cp target/classes Main
 
 ## Прогресс
 
-- [x] Domain model (Workout, Exercise, ExerciseSet)
+- [x] Domain model (io.github.pikachy357.workoutdiary.model.Workout, io.github.pikachy357.workoutdiary.model.Exercise, io.github.pikachy357.workoutdiary.model.ExerciseSet)
 - [x] Геттеры и валидация в конструкторах
 - [x] Обработка исключений
 - [x] Коллекции вместо массивов

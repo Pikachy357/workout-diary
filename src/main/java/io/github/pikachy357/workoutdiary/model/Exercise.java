@@ -1,3 +1,5 @@
+package io.github.pikachy357.workoutdiary.model;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,3 +1,5 @@
+package io.github.pikachy357.workoutdiary.model;
+
 public class ExerciseSet implements Describable {
     private final double weight;
     private final int reps;

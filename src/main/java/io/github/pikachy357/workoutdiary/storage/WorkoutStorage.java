@@ -1,3 +1,9 @@
+package io.github.pikachy357.workoutdiary.storage;
+
+import io.github.pikachy357.workoutdiary.model.Exercise;
+import io.github.pikachy357.workoutdiary.model.ExerciseSet;
+import io.github.pikachy357.workoutdiary.model.Workout;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
