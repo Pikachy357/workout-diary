@@ -39,7 +39,7 @@ public class Workout implements Describable {
 
     public void addExercise(Exercise exercise) {
         if (exercise == null) {
-            throw new IllegalArgumentException("Нельзя добавить null упражение");
+            throw new IllegalArgumentException("Нельзя добавить null упражнение");
         }
         exercises.add(exercise);
     }

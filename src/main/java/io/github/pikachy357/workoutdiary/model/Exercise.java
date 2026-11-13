@@ -16,7 +16,7 @@ public class Exercise implements Describable {
             throw new IllegalArgumentException("Описание не может быть null");
         }
         if (sets == null) {
-            throw new IllegalArgumentException("Список походов не может быть null");
+            throw new IllegalArgumentException("Список подходов не может быть null");
         }
         this.name = name;
         this.description = description;
@@ -49,14 +49,14 @@ public class Exercise implements Describable {
 
     public String getStatistics() {
         String sb = "Упражнение : " + name + "\n" +
-                "Тонаж за упражнение : " + getTotalVolume() + "\n" +
+                "Тоннаж за упражнение : " + getTotalVolume() + "\n" +
                 "Max вес упражнения : " + getMaxWeight() + "\n";
         return sb;
     }
 
     public void addSet(ExerciseSet set) {
         if (set == null) {
-            throw new IllegalArgumentException("Нельзя добавть null подходов");
+            throw new IllegalArgumentException("Нельзя добавить null подходов");
         }
         sets.add(set);
     }

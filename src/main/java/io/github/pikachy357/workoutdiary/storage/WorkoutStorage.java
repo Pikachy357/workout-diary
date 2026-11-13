@@ -74,7 +74,7 @@ public class WorkoutStorage {
                         currentExercise.addSet(new ExerciseSet(Double.parseDouble(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]), parts[4]));
                     }
                     default -> {
-                        throw new IOException("Строка " + lineNumber + ": неизветсная метка  " + parts[0]);
+                        throw new IOException("Строка " + lineNumber + ": неизвестная метка  " + parts[0]);
                     }
             }
             } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException | DateTimeParseException e) {

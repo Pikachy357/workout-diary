@@ -23,7 +23,7 @@ public class Main {
         WorkoutStorage storage = new WorkoutStorage(Path.of("workouts.txt"));
         try {
             history = storage.loadAll();
-            System.out.println("Загружено тренировоко: " + history.size());
+            System.out.println("Загружено тренировок: " + history.size());
         } catch (IOException e) {
             System.out.println("Не удалось загрузить историю: " + e.getMessage());
             history = new ArrayList<>();
