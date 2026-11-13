@@ -22,6 +22,13 @@ class WorkoutStorageTest {
     Path tempDir;
 
     @Test
+    void missingFileGivesEmptyHistory() throws IOException {
+        WorkoutStorage storage = new WorkoutStorage(tempDir.resolve("nothing.txt"));
+        List<Workout> loaded = storage.loadAll();
+        assertTrue(loaded.isEmpty());
+    }
+
+    @Test
     void savedWorkoutIsLoadedBack() throws IOException {
         WorkoutStorage storage = new WorkoutStorage(tempDir.resolve("Workouts.txt"));
         Exercise squat = new Exercise("Приседания", "Со штангой", new ArrayList<>());
