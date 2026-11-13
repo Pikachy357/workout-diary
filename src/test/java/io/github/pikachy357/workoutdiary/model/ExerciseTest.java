@@ -48,7 +48,7 @@ class ExerciseTest {
                 () -> press.getSets().add(new ExerciseSet(100, 5, 8, "В обход")));
     }
     @Test
-    void execiseKeepOwnOfSetsList() {
+    void exerciseKeepsOwnCopyOfSetsList() {
         List<ExerciseSet> sets = new ArrayList<>();
         Exercise press = new Exercise("Жим", "Со штангой", sets);
         sets.add(new ExerciseSet(100,5,8,"В обход"));

@@ -11,16 +11,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  class WorkoutTest {
      @Test
      void exercisesCannotBeModifiedFromOutside(){
-         Workout press = new Workout(LocalDate.now(), "Тренировка в воскресенье", new ArrayList<>());
+         Workout workout = new Workout(LocalDate.now(), "Тренировка в воскресенье", new ArrayList<>());
 
          assertThrows(UnsupportedOperationException.class,
-                 () -> press.getExercises().add(new Exercise("Жим", "с прыжком",  new ArrayList<>())));
+                 () -> workout.getExercises().add(new Exercise("Жим", "с прыжком",  new ArrayList<>())));
      }
      @Test
      void workoutKeepsOwnOfExerciseList() {
          List<Exercise> exercises = new ArrayList<>();
-         Workout press = new Workout(LocalDate.now(), "Тренировка в воскресенье", exercises);
+         Workout workout = new Workout(LocalDate.now(), "Тренировка в воскресенье", exercises);
          exercises.add(new Exercise("Жим", "с прыжком",new ArrayList<>()));
-         assertEquals(0,press.getExercises().size());
+         assertEquals(0,workout.getExercises().size());
      }
 }
