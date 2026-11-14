@@ -11,14 +11,13 @@ public class StatisticsService {
 
     public Map<String, Double> bestWeightByExercise(List<Workout> workouts) {
         Map<String, Double> best = new TreeMap<>();
-        for (Workout w: workouts){
-            for (Exercise e: w.getExercises()){
-                if (best.containsKey(e.getName())) {
-                    if (best.get(e.getName()) > e.getMaxWeight()) {
-                        continue;
-                    }
+        for (Workout workout: workouts){
+            for (Exercise exercise: workout.getExercises()){
+                String name = exercise.getName();
+                Double max =exercise.getMaxWeight();
+                if (!best.containsKey(name) || max > best.get(name)) {
+                        best.put(name,max);
                 }
-                best.put(e.getName(), e.getMaxWeight());
             }
         }
         return best;
