@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
                  () -> workout.getExercises().add(new Exercise("Жим", "с прыжком",  new ArrayList<>())));
      }
      @Test
-     void workoutKeepsOwnOfExerciseList() {
+     void workoutKeepsOwnCopyOfExercisesList() {
          List<Exercise> exercises = new ArrayList<>();
          Workout workout = new Workout(LocalDate.now(), "Тренировка в воскресенье", exercises);
          exercises.add(new Exercise("Жим", "с прыжком",new ArrayList<>()));

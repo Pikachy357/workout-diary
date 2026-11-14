@@ -3,6 +3,7 @@ package io.github.pikachy357.workoutdiary;
 import io.github.pikachy357.workoutdiary.model.Exercise;
 import io.github.pikachy357.workoutdiary.model.ExerciseSet;
 import io.github.pikachy357.workoutdiary.model.Workout;
+import io.github.pikachy357.workoutdiary.service.StatisticsService;
 import io.github.pikachy357.workoutdiary.storage.WorkoutStorage;
 
 import java.io.IOException;
@@ -28,9 +29,14 @@ public class Main {
             System.out.println("Не удалось загрузить историю: " + e.getMessage());
             history = new ArrayList<>();
         }
-        System.out.println("Вывод истории: ");
-        history.forEach(w->System.out.println(w));
-
+        if (!history.isEmpty()) {
+            System.out.println("Вывод истории: ");
+            history.forEach(w -> System.out.println(w));
+            StatisticsService statistics = new StatisticsService();
+            System.out.println("Личные рекорды:");
+            statistics.bestWeightByExercise(history)
+                    .forEach((name, weight) -> System.out.println(name + ": " + weight + " кг"));
+        }
         Scanner scanner = new Scanner(System.in);
         Workout workout = readWorkout(scanner);
         System.out.println(workout);
