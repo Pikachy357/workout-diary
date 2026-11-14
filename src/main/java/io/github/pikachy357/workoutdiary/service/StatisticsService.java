@@ -14,7 +14,7 @@ public class StatisticsService {
         for (Workout workout: workouts){
             for (Exercise exercise: workout.getExercises()){
                 String name = exercise.getName();
-                Double max =exercise.getMaxWeight();
+                double max =exercise.getMaxWeight();
                 if (!best.containsKey(name) || max > best.get(name)) {
                         best.put(name,max);
                 }
