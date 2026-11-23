@@ -63,6 +63,7 @@ public class JdbcWorkoutStorage {
             statement.setInt(3, set.getReps());
             statement.setInt(4, set.getDifficulty());
             statement.setString(5,set.getComment());
+            statement.executeUpdate();
         }
 
     }
