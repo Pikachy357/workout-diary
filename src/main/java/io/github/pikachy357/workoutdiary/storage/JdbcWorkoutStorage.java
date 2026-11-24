@@ -20,16 +20,26 @@ public class JdbcWorkoutStorage {
 
 
     public void save(Workout workout) throws SQLException {
-        try(Connection connection = DriverManager.getConnection(url, user, password)){
-            int workoutId = insertWorkout(connection, workout);
-            for (Exercise exercise : workout.getExercises()){
-                int exerciseId = insertExercise(connection, exercise, workoutId);
-                for (ExerciseSet set: exercise.getSets()) {
-                    insertExerciseSet(connection, set, exerciseId);
-                }
+        try(Connection connection = DriverManager.getConnection(url, user, password);){
+            connection.setAutoCommit(false);
+            try {
+                insertWorkoutWithExercises(workout, connection);
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw e;
             }
         }
+    }
 
+    private void insertWorkoutWithExercises(Workout workout, Connection connection) throws SQLException {
+        int workoutId = insertWorkout(connection, workout);
+        for (Exercise exercise : workout.getExercises()){
+            int exerciseId = insertExercise(connection, exercise, workoutId);
+            for (ExerciseSet set: exercise.getSets()) {
+                insertExerciseSet(connection, set, exerciseId);
+            }
+        }
     }
 
     private int insertWorkout(Connection connection, Workout workout) throws SQLException {
