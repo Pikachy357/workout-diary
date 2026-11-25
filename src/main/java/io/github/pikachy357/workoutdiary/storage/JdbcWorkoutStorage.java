@@ -33,10 +33,7 @@ public class JdbcWorkoutStorage {
                 workouts.add(new Workout(date,name, loadExercise(workouts_id)));
             }
             return workouts;
-        } catch (SQLException e) {
-            System.out.println("Ошибка базы данных: " + e.getMessage());
         }
-        return null;
     }
 
     public List<Exercise> loadExercise(int id) throws SQLException{
@@ -55,10 +52,7 @@ public class JdbcWorkoutStorage {
                 }
                 return exercises;
             }
-        } catch (SQLException e) {
-            System.out.println("Ошибка базы данных: " + e.getMessage());
         }
-        return null;
     }
 
     public List<ExerciseSet> loadSet(int id) throws SQLException{
@@ -78,10 +72,7 @@ public class JdbcWorkoutStorage {
                 }
                 return sets;
             }
-        } catch (SQLException e) {
-            System.out.println("Ошибка базы данных: " + e.getMessage());
         }
-        return null;
     }
 
     public void save(Workout workout) throws SQLException {
