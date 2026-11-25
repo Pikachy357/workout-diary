@@ -5,6 +5,9 @@ import io.github.pikachy357.workoutdiary.model.ExerciseSet;
 import io.github.pikachy357.workoutdiary.model.Workout;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class JdbcWorkoutStorage {
@@ -17,7 +20,69 @@ public class JdbcWorkoutStorage {
     private final String user;
     private final String password;
 
+    public List<Workout> loadAll() throws SQLException{
+        String sql = "SELECT * FROM workouts";
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet rows = statement.executeQuery()) {
+            List<Workout> workouts = new ArrayList<>();
+            while (rows.next()) {
+                int workouts_id = rows.getInt("id");
+                LocalDate date = rows.getObject("workout_date", LocalDate.class);
+                String name = rows.getString("name");
+                workouts.add(new Workout(date,name, loadExercise(workouts_id)));
+            }
+            return workouts;
+        } catch (SQLException e) {
+            System.out.println("Ошибка базы данных: " + e.getMessage());
+        }
+        return null;
+    }
 
+    public List<Exercise> loadExercise(int id) throws SQLException{
+        String sql = "SELECT * FROM exercises WHERE workout_id = ?";
+        List<Workout> workouts = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            try (ResultSet rows = statement.executeQuery()){
+                List <Exercise> exercises = new ArrayList<>();
+                while (rows.next()) {
+                int exercise_id = rows.getInt("id");
+                String name = rows.getString("name");
+                String description = rows.getString("description");
+                    exercises.add( new Exercise(name, description, loadSet(exercise_id)));
+                }
+                return exercises;
+            }
+        } catch (SQLException e) {
+            System.out.println("Ошибка базы данных: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public List<ExerciseSet> loadSet(int id) throws SQLException{
+        String sql = "SELECT * FROM exercise_sets WHERE exercise_id = ?";
+        List<Workout> workouts = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            try (ResultSet rows = statement.executeQuery()){
+                List<ExerciseSet> sets = new ArrayList<>();
+                while (rows.next()) {
+                double weight = rows.getDouble("weight");
+                int reps = rows.getInt("reps");
+                int difficulty = rows.getInt("difficulty");
+                String comment = rows.getString("comment");
+                    sets.add(new ExerciseSet(weight,reps,difficulty,comment));
+                }
+                return sets;
+            }
+        } catch (SQLException e) {
+            System.out.println("Ошибка базы данных: " + e.getMessage());
+        }
+        return null;
+    }
 
     public void save(Workout workout) throws SQLException {
         try(Connection connection = DriverManager.getConnection(url, user, password);){
