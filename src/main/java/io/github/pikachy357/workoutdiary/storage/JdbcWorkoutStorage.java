@@ -21,26 +21,30 @@ public class JdbcWorkoutStorage {
     private final String password;
 
     public List<Workout> loadAll() throws SQLException{
+        try (Connection connection = DriverManager.getConnection(url, user, password);) {
+            return loadWorkouts(connection);
+        }
+    }
+
+    private List<Workout> loadWorkouts(Connection connection) throws SQLException {
         String sql = "SELECT * FROM workouts";
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(sql);
+        List<Workout> workouts = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet rows = statement.executeQuery()) {
-            List<Workout> workouts = new ArrayList<>();
             while (rows.next()) {
                 int workouts_id = rows.getInt("id");
                 LocalDate date = rows.getObject("workout_date", LocalDate.class);
                 String name = rows.getString("name");
-                workouts.add(new Workout(date,name, loadExercise(workouts_id)));
+                workouts.add(new Workout(date, name, loadExercise(connection, workouts_id)));
             }
-            return workouts;
         }
+        return workouts;
     }
 
-    public List<Exercise> loadExercise(int id) throws SQLException{
+    public List<Exercise> loadExercise(Connection connection,int id) throws SQLException{
         String sql = "SELECT * FROM exercises WHERE workout_id = ?";
         List<Workout> workouts = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             try (ResultSet rows = statement.executeQuery()){
                 List <Exercise> exercises = new ArrayList<>();
@@ -48,18 +52,17 @@ public class JdbcWorkoutStorage {
                 int exercise_id = rows.getInt("id");
                 String name = rows.getString("name");
                 String description = rows.getString("description");
-                    exercises.add( new Exercise(name, description, loadSet(exercise_id)));
+                    exercises.add( new Exercise(name, description, loadSet(connection, exercise_id)));
                 }
                 return exercises;
             }
         }
     }
 
-    public List<ExerciseSet> loadSet(int id) throws SQLException{
+    public List<ExerciseSet> loadSet(Connection connection, int id) throws SQLException{
         String sql = "SELECT * FROM exercise_sets WHERE exercise_id = ?";
         List<Workout> workouts = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             try (ResultSet rows = statement.executeQuery()){
                 List<ExerciseSet> sets = new ArrayList<>();
