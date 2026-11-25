@@ -26,25 +26,18 @@ public class JdbcDemo {
             return;
         }
 
-//        Scanner scanner = new Scanner(System.in);
-//        Workout workout = readWorkout(scanner);
-//        JdbcWorkoutStorage jdbcWorkoutStorage = new JdbcWorkoutStorage(URL,USER,password);
-//
-//        try {
-//            jdbcWorkoutStorage.save(workout);
-//        }
-//        catch (SQLException e) {
-//            System.out.println("Ошибка базы данных: " + e.getMessage());
-//        }
+        Scanner scanner = new Scanner(System.in);
+        Workout workout = readWorkout(scanner);
         JdbcWorkoutStorage jdbcWorkoutStorage = new JdbcWorkoutStorage(URL,USER,password);
+
         try {
+            jdbcWorkoutStorage.save(workout);
             List<Workout> workouts = jdbcWorkoutStorage.loadAll();
             workouts.forEach(w -> System.out.println(w));
         }
         catch (SQLException e) {
             System.out.println("Ошибка базы данных: " + e.getMessage());
         }
-
 
 
         String sql = "SELECT * FROM workouts";

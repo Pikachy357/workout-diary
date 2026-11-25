@@ -27,7 +27,7 @@ public class JdbcWorkoutStorage {
     }
 
     private List<Workout> loadWorkouts(Connection connection) throws SQLException {
-        String sql = "SELECT * FROM workouts";
+        String sql = "SELECT * FROM workouts ORDER BY id";
         List<Workout> workouts = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet rows = statement.executeQuery()) {
@@ -42,7 +42,7 @@ public class JdbcWorkoutStorage {
     }
 
     public List<Exercise> loadExercise(Connection connection,int id) throws SQLException{
-        String sql = "SELECT * FROM exercises WHERE workout_id = ?";
+        String sql = "SELECT * FROM exercises WHERE workout_id = ? ORDER BY id";
         List<Workout> workouts = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
@@ -60,7 +60,7 @@ public class JdbcWorkoutStorage {
     }
 
     public List<ExerciseSet> loadSet(Connection connection, int id) throws SQLException{
-        String sql = "SELECT * FROM exercise_sets WHERE exercise_id = ?";
+        String sql = "SELECT * FROM exercise_sets WHERE exercise_id = ? ORDER BY id";
         List<Workout> workouts = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
