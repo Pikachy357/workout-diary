@@ -4,10 +4,10 @@ import io.github.pikachy357.workoutdiary.model.Exercise;
 import io.github.pikachy357.workoutdiary.model.ExerciseSet;
 import io.github.pikachy357.workoutdiary.model.Workout;
 import io.github.pikachy357.workoutdiary.service.StatisticsService;
-import io.github.pikachy357.workoutdiary.storage.WorkoutStorage;
+import io.github.pikachy357.workoutdiary.storage.JdbcWorkoutStorage;
 
 import java.io.IOException;
-import java.nio.file.Path;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -18,17 +18,27 @@ import java.util.function.Predicate;
 public class Main {
     private static final Predicate<String> TEXT_RULE = v -> !v.contains(";") && !v.isBlank();
     private static final String TEXT_ERROR_MESSAGE = "Ошибка ввода, вы ввели пустую строку или использовали запрещённый символ ';' .";
+    private static final String URL = "jdbc:postgresql://localhost:5432/workout_diary";
+    private static final String USER = "postgres";
 
     public static void main(String[] args) {
+        String password = System.getenv("DB_PASSWORD");
+        if (password == null) {
+            System.out.println("Не задана переменная окружения DB_PASSWORD");
+            return;
+        }
+
+        JdbcWorkoutStorage storage = new JdbcWorkoutStorage(URL, USER, password);
         List<Workout> history;
-        WorkoutStorage storage = new WorkoutStorage(Path.of("workouts.txt"));
+
         try {
             history = storage.loadAll();
             System.out.println("Загружено тренировок: " + history.size());
-        } catch (IOException e) {
-            System.out.println("Не удалось загрузить историю: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Ошибка базы данных: " + e.getMessage());
             history = new ArrayList<>();
         }
+
         if (!history.isEmpty()) {
             System.out.println("Вывод истории: ");
             history.forEach(w -> System.out.println(w));
@@ -37,6 +47,7 @@ public class Main {
             statistics.bestWeightByExercise(history)
                     .forEach((name, weight) -> System.out.println(name + ": " + weight + " кг"));
         }
+
         Scanner scanner = new Scanner(System.in);
         Workout workout = readWorkout(scanner);
         System.out.println(workout);
@@ -44,9 +55,9 @@ public class Main {
 
         try {
             storage.save(workout);
-            System.out.println("Сохранено: " + storage.getPath().toAbsolutePath());
-        } catch (IOException e) {
-            System.out.println("Не удалось сохранить в файл. Ошибка : " + e.getMessage());
+            System.out.println("Сохранено в базе данных: URL = "+ URL + "USER = " + USER);
+        } catch (SQLException e) {
+            System.out.println("Ошибка базы данных: " + e.getMessage());
         }
 
     }
