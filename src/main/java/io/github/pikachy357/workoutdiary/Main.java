@@ -36,7 +36,7 @@ public class Main {
             System.out.println("Загружено тренировок: " + history.size());
         } catch (SQLException e) {
             System.out.println("Ошибка базы данных: " + e.getMessage());
-            history = new ArrayList<>();
+            return;
         }
 
         if (!history.isEmpty()) {
